@@ -44,7 +44,7 @@ class Gui(Tk.Frame):
 
         Tk.Label(master=ui_frame, text="Durability function roots").grid(row=6, sticky=Tk.NW)
         self.entry_durability_function_roots = Tk.Entry(master=ui_frame)
-        self.entry_durability_function_roots.grid(row=5, sticky=Tk.NW)
+        self.entry_durability_function_roots.grid(row=7, sticky=Tk.NW)
         self.entry_durability_function_roots.insert(0, ",".join(map(str, cconway._D)))
         self.entry_durability_function_roots.bind("<Return>", lambda e: self.set_durability_function_roots())
 
