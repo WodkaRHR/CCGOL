@@ -5,6 +5,13 @@ A = 10
 P = 4
 _B = [3]
 _D = [2, 3]
+DISTANCE = "euclid"
+_distances = {
+    "euclid" : (lambda x0, y0, x1, y1: math.sqrt(math.pow(x0 - x1, 2) + math.pow(y0 - y1, 2))),
+    "average" : (lambda x0, y0, x1, y1: (abs(x0 - x1) + abs(y0 - y1)) / 2),
+    "max" : (lambda x0, y0, x1, y1: max(abs(x0 - x1), abs(y0 - y1))) 
+}
+
 
 def polynomial_functor(roots):
     """ Functor to create a pol. function a*(1-(1/(1 + (x-ri))))"""
@@ -25,15 +32,13 @@ def _d(f):
 
 class CGrid:
     """ Continuous grid"""
-    def __init__(self, width, height, b=_b, d=_d, f=None, xrange=2, yrange=2):
+    def __init__(self, width, height, b=_b, d=_d, xrange=2, yrange=2):
         """ b(f) (birth rate) and d(f) (durability function) are polynomial
         functions depending on the strength of the surrounding field
         xrange, yrange defines how many neighbours are creating a field for a cell"""
-        if not f: f = self._field
         self.width = width
         self.height = height
         self.reset()
-        self.f = f #default field function
         self.b = b
         self.d = d
         self.xrange = xrange
@@ -50,16 +55,7 @@ class CGrid:
 
     def _distance(self, x0, y0, x1, y1):
         """ Calculates the distance between two points"""
-        dx, dy = x1 - x0, y1 - y0
-        return math.sqrt(dx*dx + dy*dy)
-
-    def _field(self, x, y, x0, y0):
-        """ Default field function:
-        (x, y) is the room coordinate
-        (x0, y0) is the coordinate of the cell generating the field """
-        d = self._distance(x, y, x0, y0)
-        if not d: return 0
-        return self.cells[y][x] / distance
+        return _distances[DISTANCE](x0, y0, x1, y1)
 
 
     def _iter_field(self):
@@ -96,6 +92,11 @@ class CGrid:
                 c_last = self.cells[y][x]
                 f = self.field[y][x]
                 self.cells[y][x] = 1 / (1 + self.b(f) * math.pow(1 - c_last, 1) + self.d(f) * math.pow(c_last, 1))
+
+    def set_DISTANCE(self, distance):
+        """ Changes the distance method """
+        global DISTANCE
+        DISTANCE = distance
 
 
         
