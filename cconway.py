@@ -5,6 +5,16 @@ A = 10
 P = 4
 _B = [3]
 _D = [2, 3]
+<<<<<<< HEAD
+=======
+DISTANCE = "euclid"
+_distances = {
+    "euclid" : (lambda x0, y0, x1, y1: math.sqrt(math.pow(x0 - x1, 2) + math.pow(y0 - y1, 2))),
+    "average" : (lambda x0, y0, x1, y1: (abs(x0 - x1) + abs(y0 - y1)) / 2),
+    "max" : (lambda x0, y0, x1, y1: max(abs(x0 - x1), abs(y0 - y1))) 
+}
+
+>>>>>>> 42bca687494647403ca3e87d2b452d881be3620d
 
 def polynomial_functor(roots):
     """ Functor to create a pol. function a*(1-(1/(1 + (x-ri))))"""
@@ -15,7 +25,11 @@ def polynomial_functor(roots):
         return r
     return f
 
+<<<<<<< HEAD
 1   def _b(f):
+=======
+def _b(f):
+>>>>>>> 42bca687494647403ca3e87d2b452d881be3620d
     """ Best birth rate at field = 3 """
     return polynomial_functor(_B)(f)
 
@@ -25,6 +39,7 @@ def _d(f):
 
 class CGrid:
     """ Continuous grid"""
+<<<<<<< HEAD
     def __init__(self, width, height, b=_b, d=_d, f=None, xrange=2, yrange=2):
         """ b(f) (birth rate) and d(f) (durability function) are polynomial
         functions depending on the strength of the surrounding field
@@ -34,6 +49,15 @@ class CGrid:
         self.height = height
         self.reset()
         self.f = f #default field function
+=======
+    def __init__(self, width, height, b=_b, d=_d, xrange=2, yrange=2):
+        """ b(f) (birth rate) and d(f) (durability function) are polynomial
+        functions depending on the strength of the surrounding field
+        xrange, yrange defines how many neighbours are creating a field for a cell"""
+        self.width = width
+        self.height = height
+        self.reset()
+>>>>>>> 42bca687494647403ca3e87d2b452d881be3620d
         self.b = b
         self.d = d
         self.xrange = xrange
@@ -50,8 +74,12 @@ class CGrid:
 
     def _distance(self, x0, y0, x1, y1):
         """ Calculates the distance between two points"""
+<<<<<<< HEAD
         dx, dy = x1 - x0, y1 - y0
         return math.sqrt(dx*dx + dy*dy)
+=======
+        return _distances[DISTANCE](x0, y0, x1, y1)
+>>>>>>> 42bca687494647403ca3e87d2b452d881be3620d
 
 
     def _iter_field(self):
@@ -89,5 +117,13 @@ class CGrid:
                 f = self.field[y][x]
                 self.cells[y][x] = 1 / (1 + self.b(f) * math.pow(1 - c_last, 1) + self.d(f) * math.pow(c_last, 1))
 
+<<<<<<< HEAD
+=======
+    def set_DISTANCE(self, distance):
+        """ Changes the distance method """
+        global DISTANCE
+        DISTANCE = distance
+
+>>>>>>> 42bca687494647403ca3e87d2b452d881be3620d
 
         
