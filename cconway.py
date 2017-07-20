@@ -18,7 +18,7 @@ def polynomial_functor(roots):
     def f(x):
         r = A
         for root in roots:
-            r *= 1 - 1 / (1 + math.pow(x - root, P))
+            r *= 1 - 1 / (1 + math.pow(abs(x - root), P))
         return r
     return f
 
