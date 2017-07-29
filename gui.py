@@ -212,7 +212,7 @@ class Gui(Tk.Frame):
         self.auto_iterate_running = True
         widgets_to_disable = [
             self.entry_birth_function_roots, self.entry_durability_function_roots, self.entry_field_computation_range, self.entry_flattness, self.entry_spectrum,
-            self.button_iterate, self.button_random, self.button_reset, self.option_menu_distance_metric, self.checkbox_borders_connected
+            self.button_iterate, self.button_random, self.button_reset, self.option_menu_distance_metric, self.checkbox_borders_connected, self.button_export
             ]
         for widget in widgets_to_disable:
             widget.configure(state = "disabled")
